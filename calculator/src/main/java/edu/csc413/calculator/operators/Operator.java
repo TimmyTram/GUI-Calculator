@@ -20,10 +20,10 @@ public abstract class Operator {
 
     static {
         operatorsMap.put("+", new AddOperator());
-//        operatorsMap.put("-", new SubtractOperator());
-//        operatorsMap.put("*", new MultiplyOperator());
-//        operatorsMap.put("/", new DivideOperator());
-//        operatorsMap.put("^", new PowerOperator());
+        operatorsMap.put("-", new SubtractOperator());
+        operatorsMap.put("*", new MultiplyOperator());
+        operatorsMap.put("/", new DivideOperator());
+        operatorsMap.put("^", new PowerOperator());
     }
 
     /**
