@@ -13,7 +13,7 @@ public class Evaluator {
   private Stack<Operand> operandStack;
   private Stack<Operator> operatorStack;
   private StringTokenizer expressionTokenizer;
-  private final String delimiters = " +/*-^";
+  private final String delimiters = " +/*-^()"; // added () for PEMDAS and tests
 
   public Evaluator() {
     operandStack = new Stack<>();
@@ -70,7 +70,6 @@ public class Evaluator {
       }
     }
 
-
     // Control gets here when we've picked up all of the tokens; you must add
     // code to complete the evaluation - consider how the code given here
     // will evaluate the expression 1+2*3
@@ -79,7 +78,28 @@ public class Evaluator {
     // In order to complete the evaluation we must empty the stacks,
     // that is, we should keep evaluating the operator stack until it is empty;
     // Suggestion: create a method that processes the operator stack until empty.
+  
 
-    return 0;
+    System.out.println(operandStack.peek().getValue());
+    return operandStack.peek().getValue();
   }
+
+  /*
+    Helper function that processes according to the evaluation of infix expressions:
+    In the following, “process” means,
+    (i) pop operand stack once (value1)
+    (ii) pop operator stack once (operator)
+    (iii) pop operand stack again (value2)
+    (iv) compute value1 operator  value2
+    (v) push the value obtained in operand stack.
+   */
+  private void process() {
+    Operator operatorFromStack = operatorStack.pop();
+    Operand operandTwo = operandStack.pop();
+    Operand operandOne = operandStack.pop();
+    Operand result = operatorFromStack.execute( operandOne, operandTwo );
+    operandStack.push( result );
+  }
+
+
 }
