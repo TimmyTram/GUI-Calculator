@@ -2,6 +2,9 @@ package edu.csc413.calculator.operators;
 
 import edu.csc413.calculator.evaluator.Operand;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Operator {
     // The Operator class should contain an instance of a HashMap
     // This map will use keys as the tokens we're interested in,
@@ -13,6 +16,15 @@ public abstract class Operator {
     // HashMap operators = new HashMap();
     // operators.put( "+", new AdditionOperator() );
     // operators.put( "-", new SubtractionOperator() );
+    private static Map<String, Operator> operatorsMap = new HashMap<>();
+
+    static {
+        operatorsMap.put("+", new AddOperator());
+//        operatorsMap.put("-", new SubtractOperator());
+//        operatorsMap.put("*", new MultiplyOperator());
+//        operatorsMap.put("/", new DivideOperator());
+//        operatorsMap.put("^", new PowerOperator());
+    }
 
     /**
      * retrieve the priority of an Operator
@@ -48,6 +60,6 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-        return false;
+        return operatorsMap.containsKey(token);
     }
 }
