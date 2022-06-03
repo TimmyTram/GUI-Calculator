@@ -4,7 +4,7 @@ import edu.csc413.calculator.evaluator.Operand;
 
 public class RightParenthesisOperator extends Operator {
 
-    private final int rightPriority = 4; // right parenthesis is given higest priority
+    private final int rightPriority = 0; // right parenthesis is given the lowest priority
 
     @Override
     public int priority() {
