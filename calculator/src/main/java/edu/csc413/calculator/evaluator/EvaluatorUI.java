@@ -1,5 +1,7 @@
 package edu.csc413.calculator.evaluator;
 
+import edu.csc413.calculator.exceptions.InvalidTokenException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -71,7 +73,24 @@ public class EvaluatorUI extends JFrame implements ActionListener {
      *                    button is pressed.
      */
     public void actionPerformed(ActionEvent actionEventObject) {
-
-
+        if("=".equals(actionEventObject.getActionCommand())) {
+            try {
+                Evaluator evaluator = new Evaluator();
+                int res = evaluator.evaluateExpression(expressionTextField.getText());
+                expressionTextField.setText(Integer.toString(res));
+            } catch(InvalidTokenException e) {
+                expressionTextField.setText("");
+            }
+        } else if("C".equals(actionEventObject.getActionCommand())) {
+            expressionTextField.setText("");
+        } else if("CE".equals(actionEventObject.getActionCommand())) {
+            // I'm not sure what CE actually is in a calculator, so I'm going treat it like a backspace since we don't have one
+            String text = expressionTextField.getText();
+            if(text.length() > 0) {
+                expressionTextField.setText(text.substring(0, text.length() - 1));
+            }
+        } else {
+            expressionTextField.setText(expressionTextField.getText() + actionEventObject.getActionCommand());
+        }
     }
 }

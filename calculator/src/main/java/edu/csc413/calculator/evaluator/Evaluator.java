@@ -45,27 +45,17 @@ public class Evaluator {
 
                     Operator newOperator = Operator.getOperator(expressionToken);
 
-//                    if (")".equals(expressionToken)) {
-//                        while(!operatorStack.isEmpty() && operatorStack.peek().getClass() != Operator.getOperator("(").getClass()) {
-//                            process();
-//                        }
-//                        operatorStack.pop();
-//                    }
-
-
-                    while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
-                        // note that when we eval the expression 1 - 2 we will
-                        // push the 1 then the 2 and then do the subtraction operation
-                        // This means that the first number to be popped is the
-                        // second operand, not the first operand - see the following code
-                        Operator operatorFromStack = operatorStack.pop();
-                        Operand operandTwo = operandStack.pop();
-                        Operand operandOne = operandStack.pop();
-                        Operand result = operatorFromStack.execute(operandOne, operandTwo);
-                        operandStack.push(result);
+                    // TODO: Figure out this parenethsis problem
+                    if(")".equals(expressionToken)) {
+                        while(operatorStack.peek().getClass() != Operator.getOperator("(").getClass()) {
+                            process();
+                        }
+                        operatorStack.push(newOperator);
                     }
 
-
+                    while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
+                        process();
+                    }
                     operatorStack.push(newOperator);
                 }
             }
