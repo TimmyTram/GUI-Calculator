@@ -45,18 +45,24 @@ public class Evaluator {
 
                     Operator newOperator = Operator.getOperator(expressionToken);
 
-                    // TODO: Figure out this parenethsis problem
                     if(")".equals(expressionToken)) {
+                        // if we encounter a ')' there should exist some '(' so we should process every
+                        // expression until we find '('
                         while(operatorStack.peek().getClass() != Operator.getOperator("(").getClass()) {
+                            process();
+                        }
+                        operatorStack.pop(); // This should get rid of the '(' when we are done with it
+                    } else {
+                        // must check if empty on initial run, so we don't peek for an operator that does not exist
+                        // prevent '(' from being processed because there is no execution available for it.
+                        while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() &&
+                                (newOperator.getClass() != Operator.getOperator("(").getClass()) &&
+                                (operatorStack.peek().getClass() != Operator.getOperator("(").getClass())
+                        ) {
                             process();
                         }
                         operatorStack.push(newOperator);
                     }
-
-                    while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
-                        process();
-                    }
-                    operatorStack.push(newOperator);
                 }
             }
         }
